@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head"></head>
+<body>
+	<header th:replace="fragments/header :: header"></header>
+	
+	<main>
+		<section th:replace="fragments/banner :: banner"></section>
+		<section th:replace="fragments/categories :: categories"></section>
+		<section th:replace="fragments/products :: products"></section>
+	</main>
+	
+	<footer th:replace="fragments/footer :: footer"></footer>
+	<div th:replace="fragments/footer-bottom :: footer-bottom"></div>
+	<div th:replace="fragments/scripts :: scripts"></div>
+</body>
+</html>
