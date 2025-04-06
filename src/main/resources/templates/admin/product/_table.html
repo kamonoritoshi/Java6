@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+	<div th:fragment="table">
+	    <a th:href="@{/admin/products/create}" class="btn btn-primary mb-3">Thêm Product</a>
+	    <table class="table table-striped">
+	        <thead>
+	            <tr>
+	                <th>ID</th>
+	                <th>Tên sản phẩm</th>
+	                <th>Giá</th>
+	                <th>Số lượng tồn kho</th>
+	                <th>Danh mục</th>
+	                <th>URL hình ảnh</th>
+	                <th>Ngày tạo</th>
+	                <th></th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	            <tr th:each="product : ${products}">
+	                <td th:text="${product.id}"></td>
+	                <td th:text="${product.name}"></td>
+	                <td th:text="${product.price}"></td>
+	                <td th:text="${product.stock_quantity}"></td>
+	                <td th:text="${product.category.name}"></td>
+	                <td th:text="${product.image_url}"></td>
+	                <td th:text="${#dates.format(product.created_at, 'dd/MM/yyyy')}"></td>
+	                <td>
+	                    <a th:href="@{/admin/products/edit(id=${product.id})}" class="btn btn-warning btn-sm">Sửa</a>
+	                    <a th:href="@{/admin/products/delete(id=${product.id})}" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa</a>
+	                </td>
+	            </tr>
+	        </tbody>
+	    </table>
+	</div>
+</body>
+</html>

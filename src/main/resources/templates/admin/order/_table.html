@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+	<div th:fragment="table">
+        <a th:href="@{/admin/orders/create}" class="btn btn-primary mb-3">Thêm Order</a>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Người dùng</th>
+                    <th>Ngày đặt hàng</th>
+                    <th>Trạng thái</th>
+                    <th>Tổng tiền</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="order : ${orders}">
+                    <td th:text="${order.id}"></td>
+                    <td th:text="${order.user.username}"></td>
+                    <td th:text="${#dates.format(order.order_date, 'yyyy-MM-dd')}"></td>
+                    <td th:text="${order.status}"></td>
+                    <td th:text="${order.total_price}"></td>
+                    <td>
+                        <a th:href="@{/admin/orders/edit(id=${order.id})}" class="btn btn-warning btn-sm">Sửa</a>
+	                    <a th:href="@{/admin/orders/delete(id=${order.id})}" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+	</div>
+</body>
+</html>

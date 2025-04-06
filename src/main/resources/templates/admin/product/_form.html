@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+	<div th:fragment="form" class="mb-4">
+		<h3 th:text="${product.id} ? 'Sửa Product' : 'Thêm Product'"></h3>
+	    <form th:action="@{/admin/products/save}" th:object="${product}" method="post">
+	        <div th:if="${product.id != null}">
+	            <input type="hidden" th:field="*{id}">
+	        </div>
+	        
+	        <div class="mb-3">
+	            <label class="form-label">Tên sản phẩm</label>
+	            <input type="text" class="form-control" th:field="*{name}" required>
+	        </div>
+	        
+	        <div class="mb-3">
+	            <label class="form-label">Mô tả</label>
+	            <textarea class="form-control" th:field="*{description}" rows="3"></textarea>
+	        </div>
+	        
+	        <div class="mb-3">
+	            <label class="form-label">Giá</label>
+	            <input type="number" class="form-control" th:field="*{price}" step="0.01" required>
+	        </div>
+	        
+	        <div class="mb-3">
+	            <label class="form-label">Số lượng tồn kho</label>
+	            <input type="number" class="form-control" th:field="*{stock_quantity}" required>
+	        </div>
+	        
+	        <div class="mb-3">
+	            <label class="form-label">Danh mục</label>
+	            <select class="form-select" th:field="*{category.id}" required>
+	                <option value="">Chọn danh mục</option>
+	                <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
+	            </select>
+	        </div>
+	        
+	        <div class="mb-3">
+	            <label class="form-label">URL hình ảnh</label>
+	            <input type="text" class="form-control" th:field="*{image_url}">
+	        </div>
+	        
+	        <button type="submit" class="btn btn-success">Lưu</button>
+	        <a th:href="@{/admin/products}" class="btn btn-secondary">Hủy</a>
+	    </form>
+	</div>
+</body>
+</html>

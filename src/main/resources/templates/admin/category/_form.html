@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+	<div th:fragment="form" class="mb-4">
+		<h3 th:text="${category.id} ? 'Sửa Category' : 'Thêm Category'"></h3>
+	    <form th:action="@{/admin/categories/save}" th:object="${category}" method="post">
+            <input type="hidden" th:field="*{id}" />
+            
+            <div class="mb-3">
+                <label for="name" class="form-label">Tên loại hàng</label>
+                <input type="text" class="form-control" id="name" th:field="*{name}" required>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Lưu</button>
+            <a th:href="@{/admin/categories}" class="btn btn-secondary">Huỷ</a>
+        </form>
+	</div>
+</body>
+</html>
