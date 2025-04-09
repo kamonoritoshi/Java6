@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+	<div th:fragment="form" class="mb-4">
+		<h3 th:text="${payment.id} != null ? 'Sửa Payment' : 'Thêm Payment'"></h3>
+        <form th:action="@{/admin/payments/save}" th:object="${payment}" method="post">
+            <div th:if="${payment.id != null}">
+                <input type="hidden" th:field="*{id}">
+            </div>
+
+            <div class="mb-3">
+                <label for="order" class="form-label">Đơn hàng</label>
+                <select class="form-select" id="order" th:field="*{order.id}" required>
+                    <option value="">Chọn đơn hàng</option>
+                    <option th:each="order : ${orders}"
+                            th:value="${order.id}"
+                            th:text="'#' + ${order.id} + ' - ' + ${order.user.username}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="payment_method" class="form-label">Phương thức thanh toán</label>
+                <input type="text" class="form-control" id="payment_method" th:field="*{payment_method}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="payment_status" class="form-label">Trạng thái thanh toán</label>
+                <select class="form-select" id="payment_status" th:field="*{payment_status}" required>
+                    <option value="">Chọn trạng thái</option>
+                    <option value="Pending">Đang xử lý</option>
+                    <option value="Completed">Hoàn tất</option>
+                    <option value="Failed">Thất bại</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="transaction_id" class="form-label">Mã giao dịch</label>
+                <input type="text" class="form-control" id="transaction_id" th:field="*{transaction_id}" required>
+            </div>
+
+            <button type="submit" class="btn btn-success">Lưu</button>
+            <a th:href="@{/admin/payments}" class="btn btn-secondary">Hủy</a>
+        </form>
+	</div>
+</body>
+</html>

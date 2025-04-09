@@ -27,6 +27,7 @@ public class Category {
 	private Long id;
 	
 	private String name;
+	private String icon;
 	
 	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Product> products;

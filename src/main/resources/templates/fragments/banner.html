@@ -5,15 +5,65 @@
 </head>
 <body>
 	<section th:fragment="banner" class="banner">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <h1>Welcome to FoodMart</h1>
-                    <p>Fresh and organic food delivered to your doorstep</p>
-                    <a href="/shop" class="btn btn-success">Shop Now</a>
-                </div>
-            </div>
-        </div>
-    </section>
+	    <div class="container-fluid p-0">
+	        <div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel">
+	            <div class="carousel-inner">
+	
+	                <!-- Slide 1 -->
+	                <div class="carousel-item active position-relative">
+	                    <img src="/images/banner-image-1.jpg" class="d-block w-100 banner-img" alt="Banner 1">
+	                    <div class="carousel-caption d-flex flex-column justify-content-center align-items-center h-100 overlay">
+	                        <h1 class="text-white">Chào mừng tới FoodMart</h1>
+	                        <p class="text-white">Thực phẩm tươi và hữu cơ được giao đến tận nhà bạn!</p>
+	                        <a href="/shop" class="btn btn-success mt-3">Mua ngay</a>
+	                    </div>
+	                </div>
+	
+	                <!-- Slide 2 -->
+	                <div class="carousel-item position-relative">
+	                    <img src="/images/banner-image-2.jpg" class="d-block w-100 banner-img" alt="Banner 2">
+	                    <div class="carousel-caption d-flex flex-column justify-content-center align-items-center h-100 overlay">
+	                        <h1 class="text-white">Ăn sạch, Sống xanh</h1>
+	                        <p class="text-white">Khám phá nhiều loại thực phẩm hữu cơ của chúng tôi!</p>
+	                        <a href="/shop" class="btn btn-success mt-3">Mua ngay</a>
+	                    </div>
+	                </div>
+	            </div>
+	
+	            <!-- Controls -->
+	            <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
+	                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+	                <span class="visually-hidden">Previous</span>
+	            </button>
+	            <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
+	                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+	                <span class="visually-hidden">Next</span>
+	            </button>
+	        </div>
+	    </div>
+	
+	    <style>
+	        .banner-img {
+	            height: 400px;
+	            object-fit: cover;
+	        }
+	
+	        @media (max-width: 768px) {
+	            .banner-img {
+	                height: 250px;
+	            }
+	        }
+	
+	        .overlay {
+	            background: rgba(0, 0, 0, 0.4); /* Mờ đen overlay */
+	            top: 0;
+	            left: 0;
+	            right: 0;
+	            bottom: 0;
+	            position: absolute;
+	            padding: 0 1rem;
+	        }
+	    </style>
+	</section>
 </body>
 </html>

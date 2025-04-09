@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head"></head>
+<body>
+
+	<!-- Header Fragment -->
+	<header th:replace="fragments/header :: header"></header>
+
+	<!-- Banner hoặc breadcrumb (tuỳ chọn) -->
+	<section class="breadcrumb-section py-3 bg-light">
+		<div class="container">
+			<h2 class="text-center">Tất cả sản phẩm</h2>
+		</div>
+	</section>
+
+	<main class="py-4">
+		<div class="container">
+			<div class="row">
+				<!-- Products Fragment -->
+				<section class="col-md-9"
+					th:replace="fragments/products :: productList(${products})"></section>
+			</div>
+		</div>
+	</main>
+
+	<!-- Footer Fragment -->
+	<footer th:replace="fragments/footer :: footer"></footer>
+	<div th:replace="fragments/footer-bottom :: footer-bottom"></div>
+	
+	<div th:replace="fragments/scripts :: scripts"></div>
+</body>
+</html>

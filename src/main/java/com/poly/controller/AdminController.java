@@ -16,7 +16,10 @@ import org.springframework.web.client.RestTemplate;
 
 import com.poly.entity.Category;
 import com.poly.entity.Order;
+import com.poly.entity.OrderDetail;
+import com.poly.entity.Payment;
 import com.poly.entity.Product;
+import com.poly.entity.Review;
 import com.poly.entity.User;
 
 @Controller
@@ -332,5 +335,294 @@ public class AdminController {
 	
 	//OrderController end
 	
+	//OrderDetailController begin
 	
+	@GetMapping("/admin/order-details")
+    public String indexOrderDetail(Model model) {
+        ResponseEntity<List<OrderDetail>> response = restTemplate.exchange(
+                API_BASE_URL + "/order-details",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<OrderDetail>>() {}
+        );
+        List<OrderDetail> orderDetails = response.getBody();
+
+        List<Order> orders = restTemplate.exchange(
+                API_BASE_URL + "/orders",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<Order>>() {}
+        ).getBody();
+
+        List<Product> products = restTemplate.exchange(
+                API_BASE_URL + "/products",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<Product>>() {}
+        ).getBody();
+
+        model.addAttribute("orderDetail", new OrderDetail()); // Form trống
+        model.addAttribute("orderDetails", orderDetails);
+        model.addAttribute("orders", orders);
+        model.addAttribute("products", products);
+        return "admin/order-detail/index";
+    }
+	
+	@GetMapping("/admin/order-details/create")
+    public String createOrderDetailForm(Model model) {
+        return indexOrderDetail(model);
+    }
+	
+	@PostMapping("/admin/order-details/save")
+    public String saveOrderDetail(@ModelAttribute OrderDetail orderDetail) {
+        if (orderDetail.getId() == null) {
+            restTemplate.postForObject(API_BASE_URL + "/order-details", orderDetail, OrderDetail.class);
+        } else {
+            restTemplate.put(API_BASE_URL + "/order-details/" + orderDetail.getId(), orderDetail);
+        }
+        return "redirect:/admin/order-details";
+    }
+	
+	@GetMapping("/admin/order-details/edit")
+    public String editOrderDetailForm(@RequestParam Long id, Model model) {
+        OrderDetail orderDetail = restTemplate.getForObject(API_BASE_URL + "/order-details/" + id, OrderDetail.class);
+
+        List<OrderDetail> orderDetails = restTemplate.exchange(
+                API_BASE_URL + "/order-details",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<OrderDetail>>() {}
+        ).getBody();
+
+        List<Order> orders = restTemplate.exchange(
+                API_BASE_URL + "/orders",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<Order>>() {}
+        ).getBody();
+
+        List<Product> products = restTemplate.exchange(
+                API_BASE_URL + "/products",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<Product>>() {}
+        ).getBody();
+
+        model.addAttribute("orderDetail", orderDetail);
+        model.addAttribute("orderDetails", orderDetails);
+        model.addAttribute("orders", orders);
+        model.addAttribute("products", products);
+        return "admin/order-detail/index";
+    }
+	
+	@GetMapping("/admin/order-details/delete")
+    public String deleteOrderDetail(@RequestParam Long id) {
+        restTemplate.delete(API_BASE_URL + "/order-details/" + id);
+        return "redirect:/admin/order-details";
+    }
+	
+	//OrderDetailController end
+	
+	//PaymentController begin
+	
+	@GetMapping("/admin/payments")
+    public String indexPayments(Model model) {
+        // Lấy danh sách payment
+        ResponseEntity<List<Payment>> response = restTemplate.exchange(
+                API_BASE_URL + "/payments",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<Payment>>() {}
+        );
+        List<Payment> payments = response.getBody();
+
+        // Lấy danh sách order để hiển thị thông tin người dùng
+        ResponseEntity<List<Order>> orderResponse = restTemplate.exchange(
+                API_BASE_URL + "/orders",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<Order>>() {}
+        );
+        List<Order> orders = orderResponse.getBody();
+
+        model.addAttribute("payment", new Payment());
+        model.addAttribute("payments", payments);
+        model.addAttribute("orders", orders);
+
+        return "admin/payment/index";
+    }
+	
+	@GetMapping("/admin/payments/create")
+    public String createPaymentForm(Model model) {
+        ResponseEntity<List<Order>> orderResponse = restTemplate.exchange(
+                API_BASE_URL + "/orders",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<Order>>() {}
+        );
+        List<Order> orders = orderResponse.getBody();
+
+        model.addAttribute("payment", new Payment());
+        model.addAttribute("orders", orders);
+        return "admin/payment/index";
+    }
+	
+	@PostMapping("/admin/payments/save")
+    public String savePayment(@ModelAttribute Payment payment) {
+        if (payment.getId() == null) {
+            restTemplate.postForObject(API_BASE_URL + "/payments", payment, Payment.class);
+        } else {
+            restTemplate.put(API_BASE_URL + "/payments/" + payment.getId(), payment);
+        }
+        return "redirect:/admin/payments";
+    }
+	
+	@GetMapping("/admin/payments/edit")
+    public String editPaymentForm(@RequestParam Long id, Model model) {
+        // Lấy payment theo ID
+        Payment payment = restTemplate.getForObject(API_BASE_URL + "/payments/" + id, Payment.class);
+
+        // Lấy danh sách order
+        ResponseEntity<List<Order>> orderResponse = restTemplate.exchange(
+                API_BASE_URL + "/orders",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<Order>>() {}
+        );
+        List<Order> orders = orderResponse.getBody();
+
+        // Lấy lại danh sách payment để hiện bảng
+        ResponseEntity<List<Payment>> paymentResponse = restTemplate.exchange(
+                API_BASE_URL + "/payments",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<Payment>>() {}
+        );
+        List<Payment> payments = paymentResponse.getBody();
+
+        model.addAttribute("payment", payment);
+        model.addAttribute("payments", payments);
+        model.addAttribute("orders", orders);
+
+        return "admin/payment/index";
+    }
+	
+	@GetMapping("/admin/payments/delete")
+    public String deletePayment(@RequestParam Long id) {
+        restTemplate.delete(API_BASE_URL + "/payments/" + id);
+        return "redirect:/admin/payments";
+    }
+	
+	//PaymentController end
+	
+	//ReviewController begin
+	
+	@GetMapping("/admin/reviews")
+    public String indexReviews(Model model) {
+        ResponseEntity<List<Review>> reviewResponse = restTemplate.exchange(
+                API_BASE_URL + "/reviews",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<Review>>() {}
+        );
+        List<Review> reviews = reviewResponse.getBody();
+
+        ResponseEntity<List<User>> userResponse = restTemplate.exchange(
+                API_BASE_URL + "/users",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<User>>() {}
+        );
+        List<User> users = userResponse.getBody();
+
+        ResponseEntity<List<Product>> productResponse = restTemplate.exchange(
+                API_BASE_URL + "/products",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<Product>>() {}
+        );
+        List<Product> products = productResponse.getBody();
+
+        model.addAttribute("review", new Review());
+        model.addAttribute("reviews", reviews);
+        model.addAttribute("users", users);
+        model.addAttribute("products", products);
+        return "admin/review/index";
+    }
+	
+	@GetMapping("/admin/reviews/create")
+    public String createReviewForm(Model model) {
+        model.addAttribute("review", new Review());
+
+        ResponseEntity<List<User>> userResponse = restTemplate.exchange(
+                API_BASE_URL + "/users",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<User>>() {}
+        );
+        List<User> users = userResponse.getBody();
+
+        ResponseEntity<List<Product>> productResponse = restTemplate.exchange(
+                API_BASE_URL + "/products",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<Product>>() {}
+        );
+        List<Product> products = productResponse.getBody();
+
+        model.addAttribute("users", users);
+        model.addAttribute("products", products);
+        return "admin/review/index";
+    }
+	
+	@PostMapping("/admin/reviews/save")
+    public String saveReview(@ModelAttribute Review review) {
+        if (review.getId() == null) {
+            restTemplate.postForObject(API_BASE_URL + "/reviews", review, Review.class);
+        } else {
+            restTemplate.put(API_BASE_URL + "/reviews/" + review.getId(), review);
+        }
+        return "redirect:/admin/reviews";
+    }
+	
+	@GetMapping("/admin/reviews/edit")
+    public String editReviewForm(@RequestParam Long id, Model model) {
+        Review review = restTemplate.getForObject(API_BASE_URL + "/reviews/" + id, Review.class);
+
+        ResponseEntity<List<Review>> reviewResponse = restTemplate.exchange(
+                API_BASE_URL + "/reviews",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<Review>>() {}
+        );
+        List<Review> reviews = reviewResponse.getBody();
+
+        ResponseEntity<List<User>> userResponse = restTemplate.exchange(
+                API_BASE_URL + "/users",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<User>>() {}
+        );
+        List<User> users = userResponse.getBody();
+
+        ResponseEntity<List<Product>> productResponse = restTemplate.exchange(
+                API_BASE_URL + "/products",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<Product>>() {}
+        );
+        List<Product> products = productResponse.getBody();
+
+        model.addAttribute("review", review);
+        model.addAttribute("reviews", reviews);
+        model.addAttribute("users", users);
+        model.addAttribute("products", products);
+        return "admin/review/index";
+    }
+	
+	@GetMapping("/admin/reviews/delete")
+    public String deleteReview(@RequestParam Long id) {
+        restTemplate.delete(API_BASE_URL + "/reviews/" + id);
+        return "redirect:/admin/reviews";
+    }
 }

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+	<div th:fragment="form" class="mb-4">
+		<h3
+			th:text="${orderDetail.id} ? 'Sửa Order Detail' : 'Thêm Order Detail'"></h3>
+		<form th:action="@{/admin/order-details/save}"
+			th:object="${orderDetail}" method="post">
+			<div th:if="${orderDetail.id != null}">
+				<input type="hidden" th:field="*{id}">
+			</div>
+
+			<div class="mb-3">
+				<label for="order" class="form-label">Đơn hàng</label> <select
+					class="form-select" id="order" th:field="*{order.id}" required>
+					<option value="">Chọn đơn hàng</option>
+					<option th:each="order : ${orders}" th:value="${order.id}"
+						th:text="'#' + ${order.id} + ' - ' + ${order.user.username}"></option>
+				</select>
+			</div>
+
+			<div class="mb-3">
+				<label for="product" class="form-label">Sản phẩm</label> <select
+					class="form-select" id="product" th:field="*{product.id}" required>
+					<option value="">Chọn sản phẩm</option>
+					<option th:each="product : ${products}" th:value="${product.id}"
+						th:text="${product.name}"></option>
+				</select>
+			</div>
+
+			<div class="mb-3">
+				<label for="quantity" class="form-label">Số lượng</label> <input
+					type="number" class="form-control" id="quantity"
+					th:field="*{quantity}" min="1" required>
+			</div>
+
+			<div class="mb-3">
+				<label for="unit_price" class="form-label">Đơn giá</label> <input
+					type="number" class="form-control" id="unit_price"
+					th:field="*{unit_price}" step="0.01" min="0" required>
+			</div>
+
+			<button type="submit" class="btn btn-success">Lưu</button>
+			<a th:href="@{/admin/order-details}" class="btn btn-secondary">Hủy</a>
+		</form>
+	</div>
+</body>
+</html>

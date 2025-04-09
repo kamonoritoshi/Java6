@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+	<div th:fragment="form" class="mb-4">
+		<h3 th:text="${review.id} != null ? 'Sửa Đánh Giá' : 'Thêm Đánh Giá'"></h3>
+        <form th:action="@{/admin/reviews/save}" th:object="${review}" method="post">
+            <div th:if="${review.id != null}">
+                <input type="hidden" th:field="*{id}">
+            </div>
+
+            <div class="mb-3">
+                <label for="user" class="form-label">Người dùng</label>
+                <select class="form-select" id="user" th:field="*{user.id}" required>
+                    <option value="">Chọn người dùng</option>
+                    <option th:each="user : ${users}"
+                            th:value="${user.id}"
+                            th:text="${user.username}"></option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="product" class="form-label">Sản phẩm</label>
+                <select class="form-select" id="product" th:field="*{product.id}" required>
+                    <option value="">Chọn sản phẩm</option>
+                    <option th:each="product : ${products}"
+                            th:value="${product.id}"
+                            th:text="${product.name}"></option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="rating" class="form-label">Đánh giá (1-5)</label>
+                <input type="number" class="form-control" id="rating" th:field="*{rating}" min="1" max="5" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="comment" class="form-label">Bình luận</label>
+                <textarea class="form-control" id="comment" th:field="*{comment}" rows="3" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-success">Lưu</button>
+            <a th:href="@{/admin/reviews}" class="btn btn-secondary">Hủy</a>
+        </form>
+	</div>
+</body>
+</html>

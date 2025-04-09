@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head th:replace="fragments/head :: head"></head>
+
+<body>
+	<!-- Header -->
+	<div th:replace="fragments/header :: header"></div>
+
+	<!-- Nội dung giỏ hàng -->
+	<div class="container my-5">
+		<h2 class="mb-4 text-center">Giỏ hàng của bạn</h2>
+
+		<!-- Bảng giỏ hàng -->
+		<div class="table-responsive">
+			<table class="table table-bordered align-middle text-center">
+				<thead class="table-light">
+					<tr>
+						<th>Hình ảnh</th>
+						<th>Tên sản phẩm</th>
+						<th>Đơn giá</th>
+						<th>Số lượng</th>
+						<th>Thành tiền</th>
+						<th>Hành động</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><img src="/images/thumb-carrot.jpg" alt="Cà rốt"
+							style="width: 80px; height: auto;"></td>
+						<td>Cà Rốt Hữu Cơ</td>
+						<td>20.000 VNĐ</td>
+						<td>
+							<div
+								class="d-flex justify-content-center align-items-center gap-2">
+								<button class="btn btn-outline-danger btn-sm">
+									<iconify-icon icon="mdi:minus"></iconify-icon>
+								</button>
+								<input type="text" value="2" class="form-control text-center"
+									style="width: 50px;">
+								<button class="btn btn-outline-success btn-sm">
+									<iconify-icon icon="mdi:plus"></iconify-icon>
+								</button>
+							</div>
+						</td>
+						<td>40.000 VNĐ</td>
+						<td>
+							<button class="btn btn-outline-danger btn-sm">
+								<iconify-icon icon="mdi:trash-can"></iconify-icon>
+							</button>
+						</td>
+					</tr>
+
+					<tr>
+						<td><img src="/images/thumb-apple.jpg" alt="Táo Mỹ"
+							style="width: 80px; height: auto;"></td>
+						<td>Táo Mỹ</td>
+						<td>50.000 VNĐ</td>
+						<td>
+							<div
+								class="d-flex justify-content-center align-items-center gap-2">
+								<button class="btn btn-outline-danger btn-sm">
+									<iconify-icon icon="mdi:minus"></iconify-icon>
+								</button>
+								<input type="text" value="1" class="form-control text-center"
+									style="width: 50px;">
+								<button class="btn btn-outline-success btn-sm">
+									<iconify-icon icon="mdi:plus"></iconify-icon>
+								</button>
+							</div>
+						</td>
+						<td>50.000 VNĐ</td>
+						<td>
+							<button class="btn btn-outline-danger btn-sm">
+								<iconify-icon icon="mdi:trash-can"></iconify-icon>
+							</button>
+						</td>
+					</tr>
+				</tbody>
+				<tfoot class="table-light">
+					<tr>
+						<td colspan="4" class="text-end fw-bold">Tổng cộng:</td>
+						<td class="fw-bold text-success">90.000 VNĐ</td>
+						<td></td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+
+		<!-- Nút hành động -->
+		<div class="d-flex justify-content-between mt-4">
+			<a href="/shop" class="btn btn-outline-secondary"> <iconify-icon
+					icon="mdi:arrow-left"></iconify-icon> Tiếp tục mua sắm
+			</a> <a href="/checkout" class="btn btn-primary"> Thanh toán <iconify-icon
+					icon="mdi:credit-card-outline"></iconify-icon>
+			</a>
+		</div>
+	</div>
+
+	<!-- Footer -->
+	<div th:replace="fragments/footer :: footer"></div>
+	<div th:replace="fragments/footer-bottom :: footer-bottom"></div>
+	<div th:replace="fragments/scripts :: scripts"></div>
+
+</body>
+</html>

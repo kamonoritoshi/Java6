@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head th:replace="fragments/head :: head"></head>
+
+<body>
+	<!-- Header -->
+	<div th:replace="fragments/header :: header"></div>
+
+	<!-- Nội dung liên hệ -->
+	<div class="container my-5">
+		<h2 class="text-center mb-4">Liên hệ với chúng tôi</h2>
+
+		<div class="row">
+			<!-- Thông tin liên hệ -->
+			<div class="col-md-6 mb-4">
+				<h5>Thông tin cửa hàng</h5>
+				<p>
+					<strong>Địa chỉ:</strong> 123 Đường Hữu Cơ, Quận 1, TP.HCM
+				</p>
+				<p>
+					<strong>Điện thoại:</strong> 0909 123 456
+				</p>
+				<p>
+					<strong>Email:</strong> support@foodmart.vn
+				</p>
+				<p>
+					<strong>Thời gian làm việc:</strong> 8h - 21h (T2 - CN)
+				</p>
+
+				<!-- Bản đồ tĩnh (hoặc nhúng Google Maps nếu muốn sau này) -->
+				<div class="ratio ratio-4x3 rounded shadow-sm">
+					<iframe
+						src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.4872030303047!2d106.68561997586983!3d10.774423759218048!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f2686d55d1d%3A0x8d328c4fa6efc719!2zMTMwIMSQLiBOZ3V54buFbiDEkOG7iW5oIENow60sIFBoxrDhu51uZyA2LCBRdeG6rW4gMywgVGjDoG5oIHBo4buRIEjhu41j!5e0!3m2!1svi!2s!4v1712730991234!5m2!1svi!2s"
+						width="100%" height="100%" style="border: 0;" allowfullscreen=""
+						loading="lazy"> </iframe>
+				</div>
+			</div>
+
+			<!-- Form liên hệ -->
+			<div class="col-md-6">
+				<h5>Gửi tin nhắn</h5>
+				<form>
+					<div class="mb-3">
+						<label for="name" class="form-label">Họ và tên</label> <input
+							type="text" class="form-control" id="name"
+							placeholder="Nguyễn Văn A">
+					</div>
+					<div class="mb-3">
+						<label for="email" class="form-label">Email</label> <input
+							type="email" class="form-control" id="email"
+							placeholder="example@email.com">
+					</div>
+					<div class="mb-3">
+						<label for="message" class="form-label">Nội dung</label>
+						<textarea class="form-control" id="message" rows="5"
+							placeholder="Viết lời nhắn tại đây..."></textarea>
+					</div>
+					<button type="submit" class="btn btn-primary">
+						Gửi tin nhắn
+						<iconify-icon icon="mdi:send"></iconify-icon>
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- Footer -->
+	<div th:replace="fragments/footer :: footer"></div>
+	<div th:replace="fragments/footer-bottom :: footer-bottom"></div>
+	<div th:replace="fragments/scripts :: scripts"></div>
+</body>
+</html>

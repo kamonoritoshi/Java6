@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+	<div th:fragment="table">
+        <a th:href="@{/admin/reviews/create}" class="btn btn-primary mb-3">Thêm Đánh Giá</a>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Người dùng</th>
+                    <th>Sản phẩm</th>
+                    <th>Đánh giá</th>
+                    <th>Bình luận</th>
+                    <th>Ngày tạo</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="review : ${reviews}">
+                    <td th:text="${review.id}"></td>
+                    <td th:text="${review.user.username}"></td>
+                    <td th:text="${review.product.name}"></td>
+                    <td th:text="${review.rating}"></td>
+                    <td th:text="${review.comment}"></td>
+                    <td th:text="${#dates.format(review.created_at, 'yyyy-MM-dd')}"></td>
+                    <td>
+                        <a th:href="@{/admin/reviews/edit(id=${review.id})}" class="btn btn-warning btn-sm">Sửa</a>
+                        <a th:href="@{/admin/reviews/delete(id=${review.id})}" class="btn btn-danger btn-sm" 
+                           onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+	</div>
+</body>
+</html>
